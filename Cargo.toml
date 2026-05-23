@@ -2,7 +2,7 @@
 name = "pizza-analysis-greek"
 version = "0.1.0"
 edition = "2021"
-description = "Greek language analysis components for Pizza search engine"
+description = "Greek text analysis plugin for INFINI Pizza"
 license = "MIT"
 
 [features]
