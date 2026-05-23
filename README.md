@@ -1,49 +1,69 @@
-# pizza-analysis-greek
+<div align="center">
 
-Greek language analysis with Greek-specific lowercasing, stemming, and stop words.
+# 🇬🇷 pizza-analysis-greek
 
-Part of the [Pizza](https://pizza.rs) search engine.
+**Greek text analysis plugin for [INFINI Pizza](https://pizza.rs)**
+
+[![Crate](https://img.shields.io/badge/crate-pizza--analysis--greek-blue)](https://github.com/pizza-rs/analysis-greek)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+</div>
+
+---
+
+## Overview
+
+Greek language analysis with accent-aware lowercasing, stemming, and stop words.
+Handles Greek diacritics (tonos, dialytika) during case conversion.
 
 ## Components
 
-| Name | Type | Description |
-|------|------|-------------|
-| `greek_lowercase` | Token Filter | Greek-specific lowercasing with accent/diacritic removal |
-| `greek_stem` | Token Filter | Greek light stemmer |
-| `greek_stop` | Token Filter | Greek stop words filter (75 words) |
-| `greek` | Analyzer | Full pipeline: greek_lowercase → stop → stem |
+| Type | Name | Description |
+|:-----|:-----|:------------|
+| TokenFilter | `greek_lowercase` | Greek-aware lowercase (strips accents/tonos) |
+| TokenFilter | `greek_stem` | Greek stemmer (suffix stripping) |
+| TokenFilter | `greek_stop` | Greek stop words (75 entries) |
+| Analyzer | `greek` | Full pipeline: greek_lowercase → stem → stop |
 
-## Usage
+### Greek Lowercasing
 
-### Built-in Analyzer
+Standard Unicode lowercasing doesn't handle Greek accents correctly. This filter:
+- Converts Σ to σ (or ς in final position)
+- Strips tonos accent (ά→α, έ→ε, ή→η, ί→ι, ό→ο, ύ→υ, ώ→ω)
+- Handles dialytika (ϊ, ϋ)
 
-```json
-{
-  "analyzer": {
-    "type": "greek"
-  }
-}
+## Example
+
+```rust
+use pizza_engine::analysis::AnalysisFactory;
+
+let mut factory = AnalysisFactory::new();
+pizza_analysis_greek::register_all(&mut factory);
+
+let analyzer = factory.get_analyzer("greek").unwrap();
+// "ΕΛΛΗΝΙΚΆ" → ["ελληνικ"]
 ```
 
-### Custom Pipeline
+## Installation
 
-```json
-{
-  "analyzer": {
-    "type": "custom",
-    "tokenizer": "standard",
-    "filter": ["greek_lowercase", "greek_stem", "greek_stop"]
-  }
-}
+```toml
+[dependencies]
+pizza-analysis-greek = "0.1"
+```
+
+Or via `pizza-analysis-all`:
+
+```toml
+[dependencies]
+pizza-analysis-all = { version = "0.1", features = ["greek"] }
 ```
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT
 
-## Related Crates
+---
 
-- [analysis-core](https://github.com/pizza-rs/analysis-core) — Core analysis components and pipeline
-- [analysis-icu](https://github.com/pizza-rs/analysis-icu) — ICU Unicode normalization and tokenization
-- [analysis-english](https://github.com/pizza-rs/analysis-english) — English analysis
-- [analysis-all](https://github.com/pizza-rs/analysis-all) — Meta-crate registering all analyzers
+<div align="center">
+<sub>Part of the <a href="https://pizza.rs">INFINI Pizza</a> ecosystem</sub>
+</div>
