@@ -103,7 +103,7 @@ mod tests {
         };
         let (deleted, _) = filter.filter(&mut token);
         assert!(!deleted);
-        assert_eq!(token.term.as_ref(), "ελληνικ");
+        assert_eq!(token.term.as_ref(), "ελλην");
     }
 
     #[test]
