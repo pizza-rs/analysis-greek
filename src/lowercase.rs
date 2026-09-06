@@ -30,25 +30,76 @@ impl TokenFilter for GreekLowercaseFilter {
                     char::from_u32(c as u32 + 32).unwrap_or(c)
                 }
                 // Accented uppercase
-                'Ά' => { changed = true; 'α' }
-                'Έ' => { changed = true; 'ε' }
-                'Ή' => { changed = true; 'η' }
-                'Ί' => { changed = true; 'ι' }
-                'Ό' => { changed = true; 'ο' }
-                'Ύ' => { changed = true; 'υ' }
-                'Ώ' => { changed = true; 'ω' }
-                'Ϊ' => { changed = true; 'ι' }
-                'Ϋ' => { changed = true; 'υ' }
+                'Ά' => {
+                    changed = true;
+                    'α'
+                }
+                'Έ' => {
+                    changed = true;
+                    'ε'
+                }
+                'Ή' => {
+                    changed = true;
+                    'η'
+                }
+                'Ί' => {
+                    changed = true;
+                    'ι'
+                }
+                'Ό' => {
+                    changed = true;
+                    'ο'
+                }
+                'Ύ' => {
+                    changed = true;
+                    'υ'
+                }
+                'Ώ' => {
+                    changed = true;
+                    'ω'
+                }
+                'Ϊ' => {
+                    changed = true;
+                    'ι'
+                }
+                'Ϋ' => {
+                    changed = true;
+                    'υ'
+                }
                 // Accented lowercase → remove tonos
-                'ά' => { changed = true; 'α' }
-                'έ' => { changed = true; 'ε' }
-                'ή' => { changed = true; 'η' }
-                'ί' | 'ΐ' => { changed = true; 'ι' }
-                'ό' => { changed = true; 'ο' }
-                'ύ' | 'ΰ' => { changed = true; 'υ' }
-                'ώ' => { changed = true; 'ω' }
+                'ά' => {
+                    changed = true;
+                    'α'
+                }
+                'έ' => {
+                    changed = true;
+                    'ε'
+                }
+                'ή' => {
+                    changed = true;
+                    'η'
+                }
+                'ί' | 'ΐ' => {
+                    changed = true;
+                    'ι'
+                }
+                'ό' => {
+                    changed = true;
+                    'ο'
+                }
+                'ύ' | 'ΰ' => {
+                    changed = true;
+                    'υ'
+                }
+                'ώ' => {
+                    changed = true;
+                    'ω'
+                }
                 // Final sigma → regular sigma
-                'ς' => { changed = true; 'σ' }
+                'ς' => {
+                    changed = true;
+                    'σ'
+                }
                 // ASCII uppercase
                 'A'..='Z' => {
                     changed = true;

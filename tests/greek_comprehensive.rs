@@ -1,7 +1,9 @@
 //! Comprehensive tests for pizza-analysis-greek.
 
 use pizza_analysis_greek::*;
-use pizza_engine::analysis::{AnalysisFactory, Token, TokenFilter};
+use pizza_engine::analysis::AnalysisFactory;
+use pizza_engine::analysis::Token;
+use pizza_engine::analysis::TokenFilter;
 
 fn make_token(term: &str) -> Token<'_> {
     Token::new(term, 0, term.len() as u32, 0)
@@ -23,7 +25,10 @@ fn lowercase_uppercase_sigma() {
     let mut token = make_token("ΣΠΙΤΙ");
     let (deleted, _) = f.filter(&mut token);
     assert!(!deleted);
-    assert!(token.term.chars().all(|c| !c.is_uppercase() || !c.is_ascii()));
+    assert!(token
+        .term
+        .chars()
+        .all(|c| !c.is_uppercase() || !c.is_ascii()));
 }
 
 #[test]
@@ -122,7 +127,18 @@ fn stop_construction() {
 #[test]
 fn stop_filters_common_words() {
     let f = GreekStopFilter::new();
-    let stop_words = ["και", "ο", "η", "το", "στο", "να", "ειναι", "που", "με", "για"];
+    let stop_words = [
+        "και",
+        "ο",
+        "η",
+        "το",
+        "στο",
+        "να",
+        "ειναι",
+        "που",
+        "με",
+        "για",
+    ];
     for word in &stop_words {
         let mut token = make_token(word);
         let (deleted, _) = f.filter(&mut token);
